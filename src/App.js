@@ -4,17 +4,15 @@ import "./App.css";
 class App extends Component {
   state = {
     skills: [{ skill: "JavaScript", level: 4 }],
-    // New state for the inputs below
-    skill: "",
+    skill: "type here",
     level: 3
   };
 
+  formRef = React.createRef();
+
   addSkill = () => {
-    // Using the "function" approach because relying on existing state
     this.setState(state => ({
-      // Always replace, don't mutate top-level state properties
       skills: [...state.skills, state.newSkill],
-      // Reset the inputs for better UX
       newSkill: {skill: '', level: 3}
     }));
   };
@@ -22,7 +20,9 @@ class App extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   render() {
+    console.log(this.formRef);
     return (
       <section>
         <h2>Skills</h2>
@@ -33,7 +33,7 @@ class App extends Component {
           </article>
         ))}
         <hr />
-        <form onSubmit={this.addSkill = e => {
+        <form ref={this.formRef} onSubmit={this.addSkill = e => {
           e.preventDefault();
           }
         } id="events">
@@ -41,7 +41,7 @@ class App extends Component {
             <span>Add Event</span>
             <input name="skill" 
             value={this.state.skill}
-            onChange={this.handleChange} 
+            onChange={this.handleChange}
             />
             </label>
             <label>
